@@ -135,7 +135,7 @@ function cleanID($raw_id, $ascii = false)
         $sepcharpat = '#\\' . $sepchar . '+#';
 
     $id = trim((string)$raw_id);
-    $id = \dokuwiki\Utf8\PhpString::strtolower($id);
+    //$id = \dokuwiki\Utf8\PhpString::strtolower($id);
 
     //alternative namespace seperator
     if ($conf['useslash']) {

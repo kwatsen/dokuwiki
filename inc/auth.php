@@ -73,6 +73,11 @@ function auth_setup() {
         $userpass = explode(':', base64_decode($matches[1]));
         list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = $userpass;
     }
+    if(isset($_SERVER['REMOTE_USER'])) {
+        $_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'];
+        $_SERVER['PHP_AUTH_PW'] = "UNUSED";
+    }
+
 
     // if no credentials were given try to use HTTP auth (for SSO)
     if (!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($INPUT->server->str('PHP_AUTH_USER'))) {

@@ -73,10 +73,15 @@ function auth_setup() {
     if(isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
         $_SERVER['HTTP_AUTHORIZATION'] = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
     // streamline HTTP auth credentials (IIS/rewrite -> mod_php)
-    if(isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    /*if(isset($_SERVER['HTTP_AUTHORIZATION'])) {
         list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) =
             explode(':', base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+    }*/
+    if(isset($_SERVER['REMOTE_USER'])) {
+        $_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'];
+        $_SERVER['PHP_AUTH_PW'] = "UNUSED";
     }
+
 
     // if no credentials were given try to use HTTP auth (for SSO)
     if(!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($_SERVER['PHP_AUTH_USER'])) {
